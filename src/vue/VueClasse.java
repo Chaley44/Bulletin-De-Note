@@ -5,21 +5,23 @@ import java.util.Scanner;
 import domaine.Classe;
 import service.ClasseImpl;
 import service.IClasse;
+import sevice.generique.ClasseG;
+import sevice.generique.IMetier;
 public class VueClasse {
 
-	public IClasse impl = new ClasseImpl();
+	public IMetier<Classe, Integer> impl = new ClasseG();
 	
 	public  VueClasse() {
 		Classe classe1 = new Classe("4M3", 25);
 		Classe classe2 = new Classe("3M5", 23);
-		impl.creerClasse(classe1);
-		impl.creerClasse(classe2);
+		impl.creer(classe1);
+		impl.creer(classe2);
 	}
 	
 	public void listerClasse() {
 		System.out.println("Liste des classes");
 		System.out.println("===================================");
-		for(Classe classe : impl.listClasse()) {
+		for(Classe classe : impl.liste()) {
 			System.out.println("id : " + classe.getId());
 			System.out.println("Nom de la classe : " + classe.getNomClasse());
 			System.out.println("Nombre d'eleve : " + classe.getNbrEleve());
@@ -40,7 +42,7 @@ public class VueClasse {
 		input = scanner.nextLine();
 		classe.setNbrEleve(Integer.parseInt(input));
 		
-		impl.creerClasse(classe);
+		impl.creer(classe);
 		listerClasse();
 		
 		
@@ -52,10 +54,10 @@ public class VueClasse {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		classe= impl.getClasseById(Integer.parseInt(input));
+		classe= impl.getById(Integer.parseInt(input));
 		
 		
-		if(impl.listClasse().contains(classe)) {
+		if(impl.liste().contains(classe)) {
 			System.out.println("id : " + classe.getId());
 			System.out.println("Nom : " + classe.getNomClasse());
 			System.out.println("Prenom : " + classe.getNbrEleve());
@@ -72,8 +74,8 @@ public class VueClasse {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		classe= impl.getClasseById(Integer.parseInt(input));
-		impl.supprimerClasse(classe);
+		classe= impl.getById(Integer.parseInt(input));
+		impl.supprimer(classe);
 		
 		listerClasse();
 	}
@@ -84,7 +86,7 @@ public class VueClasse {
 		String input;
 		System.out.println("Entrer l'id : ");
 		input = scanner.nextLine();
-		classe = impl.getClasseById(Integer.parseInt(input));
+		classe = impl.getById(Integer.parseInt(input));
 		
 		System.out.print("Nom : ");
 		input = scanner.nextLine();
@@ -94,7 +96,7 @@ public class VueClasse {
 		input = scanner.nextLine();
 		classe.setNbrEleve(Integer.parseInt(input));
 		
-		impl.modifierClasse(classe);
+		impl.modifier(classe);
 		listerClasse();
 		
 	}

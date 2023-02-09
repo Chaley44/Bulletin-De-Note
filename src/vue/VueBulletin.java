@@ -21,14 +21,20 @@ import service.IDiscipline;
 import service.IEleve;
 import service.ILigneBulletin;
 import service.LigneBulletinImpl;
+import sevice.generique.BulletinG;
+import sevice.generique.ClasseG;
+import sevice.generique.DisciplineG;
+import sevice.generique.EleveG;
+import sevice.generique.IMetier;
+import sevice.generique.LigneBulletinG;
 
 public class VueBulletin {
 
-	public IBulletin impl = new BulletinImpl();
-	public IEleve implE = new EleveImpl();
-	public IClasse implC = new ClasseImpl();
-	public ILigneBulletin implL = new LigneBulletinImpl();
-	public IDiscipline implD = new DisciplineImpl();
+	public IMetier<Bulletin, Integer> impl = new BulletinG();
+	public IMetier<Eleve, Integer> implE = new EleveG();
+	public IMetier<Classe, Integer> implC = new ClasseG();
+	public IMetier<LigneBulletin, Integer> implL = new LigneBulletinG();
+	public IMetier<Discipline, Integer> implD = new DisciplineG();
 	
 	VueClasse vueClasse = new VueClasse();
 	VueDiscipline vueDiscipline = new VueDiscipline();
@@ -39,23 +45,23 @@ public class VueBulletin {
 			
 		Classe classe1 = new Classe("4M3", 25);
 		Classe classe2 = new Classe("3M5", 23);
-		implC.creerClasse(classe1);
-		implC.creerClasse(classe2);
+		implC.creer(classe1);
+		implC.creer(classe2);
 		
 		Discipline discipline1  = new Discipline("maths", 12, 7, 4);
 		Discipline discipline2 = new Discipline("SVT", 14, 12, 2);
 		Discipline discipline3  = new Discipline("Science", 17, 15, 3);
 		Discipline discipline4 = new Discipline("EPS", 16, 13, 1);
-		implD.creerDiscipline(discipline1);
-		implD.creerDiscipline(discipline2);
-		implD.creerDiscipline(discipline1);
-		implD.creerDiscipline(discipline2);
+		implD.creer(discipline1);
+		implD.creer(discipline2);
+		implD.creer(discipline1);
+		implD.creer(discipline2);
 		
 		
 		Eleve eleve1 = new Eleve("345ISM65", "Rachid", "mimir", LocalDate.parse("2020-04-23"), "Thies");		
 		Eleve eleve2 = new Eleve("629ISM45", "Bard", "Rami", LocalDate.parse("2010-06-15"), "Thies");		
-		implE.creerEleve(eleve1);		
-		implE.creerEleve(eleve2);
+		implE.creer(eleve1);		
+		implE.creer(eleve2);
 		
 		List<LigneBulletin> listLigneBulletin1 = new ArrayList<>();
 		List<LigneBulletin> listLigneBulletin2 = new ArrayList<>();
@@ -64,8 +70,8 @@ public class VueBulletin {
 		LigneBulletin ligneBulletin2 = new LigneBulletin(2);
 		LigneBulletin ligneBulletin3 = new LigneBulletin(7);
 		LigneBulletin ligneBulletin4 = new LigneBulletin(1);
-		implL.creerLigneBulletin(ligneBulletin1);
-		implL.creerLigneBulletin(ligneBulletin2);
+		implL.creer(ligneBulletin1);
+		implL.creer(ligneBulletin2);
 		
 		ligneBulletin1.setDiscipline(discipline1);
 		ligneBulletin2.setDiscipline(discipline2);
@@ -86,8 +92,8 @@ public class VueBulletin {
 		bulletin2.setClasse(classe2);
 		bulletin2.setEleve(eleve2);
 		bulletin2.setListLigneBulletin(listLigneBulletin2);
-		impl.creerBulletin(bulletin1);
-		impl.creerBulletin(bulletin2);
+		impl.creer(bulletin1);
+		impl.creer(bulletin2);
 	}
 	
 	
@@ -105,7 +111,7 @@ public class VueBulletin {
 	
 	public void listerBulletin() {
 		System.out.println("______Liste Bulletin_____");
-		for(Bulletin bulletin : impl.listeBulletin()) {
+		for(Bulletin bulletin : impl.liste()) {
 			System.out.println("Id : " + bulletin.getId());
 			System.out.println("Annee scolaire : " + bulletin.getAnneeScolaire());
 			System.out.println("Semestre : " + bulletin.getSemestre());
@@ -173,12 +179,12 @@ public class VueBulletin {
 		vueClasse.listerClasse();
 		System.out.print("Choisir une classe : ");
 		input =scanner.nextLine();
-		bulletin.setClasse(vueClasse.impl.getClasseById(Integer.parseInt(input)));
+		bulletin.setClasse(vueClasse.impl.getById(Integer.parseInt(input)));
 		
 		vueEleve.listerEleve();
 		System.out.print("Choisir une classe : ");
 		input =scanner.nextLine();
-		bulletin.setEleve(vueEleve.impl.getEleveById(Integer.parseInt(input)));
+		bulletin.setEleve(vueEleve.impl.getById(Integer.parseInt(input)));
 		
 		List<LigneBulletin> listLigneBulletin = new ArrayList<>();
 		
@@ -191,7 +197,7 @@ public class VueBulletin {
 			vueDiscipline.listerDiscipline();
 			System.out.println("Choisir une discipline ");
 			input =scanner.nextLine();
-			ligneBulletin.setDiscipline(vueDiscipline.impl.getDisciplineById(Integer.parseInt(input))); ;
+			ligneBulletin.setDiscipline(vueDiscipline.impl.getById(Integer.parseInt(input))); ;
 			
 			System.out.print("Rang Discipline : ");
 			input = scanner.nextLine();
@@ -215,7 +221,7 @@ public class VueBulletin {
 		}*/
 		bulletin.setListLigneBulletin(listLigneBulletin);
 		
-		impl.creerBulletin(bulletin);
+		impl.creer(bulletin);
 		listerBulletin();
 	}
 	
@@ -225,10 +231,10 @@ public class VueBulletin {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		bulletin= impl.getBulletinById(Integer.parseInt(input));
+		bulletin= impl.getById(Integer.parseInt(input));
 		
 		
-		if(impl.listeBulletin().contains(bulletin)) {
+		if(impl.liste().contains(bulletin)) {
 			System.out.println("Id : " + bulletin.getId());
 			System.out.println("Annee scolaire : " + bulletin.getAnneeScolaire());
 			System.out.println("Semestre : " + bulletin.getSemestre());
@@ -276,8 +282,8 @@ public class VueBulletin {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		bulletin= impl.getBulletinById(Integer.parseInt(input));
-		impl.supprimerBulletin(bulletin);
+		bulletin= impl.getById(Integer.parseInt(input));
+		impl.supprimer(bulletin);
 		
 		listerBulletin();
 	}
@@ -290,7 +296,7 @@ public class VueBulletin {
 		
 		System.out.print(" Entrer l'id : ");
 		input = scanner.nextLine();
-		bulletin= impl.getBulletinById(Integer.parseInt(input));
+		bulletin= impl.getById(Integer.parseInt(input));
 		
 		System.out.print("Abscence : ");
 		input = scanner.nextLine();
@@ -315,7 +321,7 @@ public class VueBulletin {
 		vueClasse.listerClasse();
 		System.out.print("Choisir une classe : ");
 		input =scanner.nextLine();
-		bulletin.setClasse(vueClasse.impl.getClasseById(Integer.parseInt(input)));
+		bulletin.setClasse(vueClasse.impl.getById(Integer.parseInt(input)));
 
 		List<LigneBulletin> listLigneBulletin = new ArrayList<>();
 		
@@ -327,7 +333,7 @@ public class VueBulletin {
 			vueDiscipline.listerDiscipline();
 			System.out.println("Choisir une discipline ");
 			input =scanner.nextLine();
-			ligneBulletin.setDiscipline(vueDiscipline.impl.getDisciplineById(Integer.parseInt(input))); ;
+			ligneBulletin.setDiscipline(vueDiscipline.impl.getById(Integer.parseInt(input))); ;
 			
 			System.out.print("Rang Discipline : ");
 			input = scanner.nextLine();
@@ -338,7 +344,7 @@ public class VueBulletin {
 		}
 		bulletin.setListLigneBulletin(listLigneBulletin);
 		
-		impl.modifierBulletin(bulletin);
+		impl.modifier(bulletin);
 		listerBulletin();
 		
 	}

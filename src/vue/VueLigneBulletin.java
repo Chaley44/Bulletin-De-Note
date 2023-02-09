@@ -8,9 +8,11 @@ import service.ClasseImpl;
 import service.IClasse;
 import service.ILigneBulletin;
 import service.LigneBulletinImpl;
+import sevice.generique.IMetier;
+import sevice.generique.LigneBulletinG;
 
 public class VueLigneBulletin {
-	public ILigneBulletin impl = new LigneBulletinImpl();
+	public IMetier<LigneBulletin, Integer> impl = new LigneBulletinG();
 	VueDiscipline vueDiscipline = new VueDiscipline();
 
 	
@@ -18,8 +20,8 @@ public class VueLigneBulletin {
 	public  VueLigneBulletin() {
 		LigneBulletin ligneBulletin1 = new LigneBulletin(4);
 		LigneBulletin ligneBulletin2 = new LigneBulletin(2);
-		impl.creerLigneBulletin(ligneBulletin1);
-		impl.creerLigneBulletin(ligneBulletin2);
+		impl.creer(ligneBulletin1);
+		impl.creer(ligneBulletin2);
 	}
 	
 	
@@ -27,7 +29,7 @@ public class VueLigneBulletin {
 	public void listerLigneBulletin() {
 		System.out.println("Liste des ligneBulletins");
 		System.out.println("===================================");
-		for(LigneBulletin ligneBulletin : impl.listLigneBulletin()) {
+		for(LigneBulletin ligneBulletin : impl.liste()) {
 			System.out.println("id : " + ligneBulletin.getId());
 			System.out.println("rang discipline : " + ligneBulletin.getRangDiscipline());
 			System.out.println("-----------------------------------");
@@ -48,7 +50,7 @@ public class VueLigneBulletin {
 		input =scanner.nextLine();
 		ligneBulletin.setDiscipline(vueDiscipline.impl.getDisciplineById(Integer.parseInt(input)));
 		*/
-		impl.creerLigneBulletin(ligneBulletin);
+		impl.creer(ligneBulletin);
 		listerLigneBulletin();
 		
 		
@@ -60,10 +62,10 @@ public class VueLigneBulletin {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		ligneBulletin= impl.getLigneBulletinById(Integer.parseInt(input));
+		ligneBulletin= impl.getById(Integer.parseInt(input));
 		
 		
-		if(impl.listLigneBulletin().contains(ligneBulletin)) {
+		if(impl.liste().contains(ligneBulletin)) {
 			System.out.println("id : " + ligneBulletin.getId());
 			System.out.println("Rang : " + ligneBulletin.getRangDiscipline());
 			
@@ -79,8 +81,8 @@ public class VueLigneBulletin {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		ligneBulletin= impl.getLigneBulletinById(Integer.parseInt(input));
-		impl.supprimerLigneBulletin(ligneBulletin);
+		ligneBulletin= impl.getById(Integer.parseInt(input));
+		impl.supprimer(ligneBulletin);
 		
 		listerLigneBulletin();
 	}
@@ -91,7 +93,7 @@ public class VueLigneBulletin {
 		String input;
 		System.out.print("Entrer id : ");
 		input = scanner.nextLine();
-		ligneBulletin = impl.getLigneBulletinById(Integer.parseInt(input));
+		ligneBulletin = impl.getById(Integer.parseInt(input));
 		
 		System.out.print("Rang Discipline : ");
 		input = scanner.nextLine();
@@ -102,7 +104,7 @@ public class VueLigneBulletin {
 		input =scanner.nextLine();
 		ligneBulletin.setDiscipline(vueBulletin.implD.getDisciplineById(Integer.parseInt(input)));
 		*/
-		impl.modifierLigneBulletin(ligneBulletin);
+		impl.modifier(ligneBulletin);
 		listerLigneBulletin();
 		
 	}

@@ -11,18 +11,18 @@ public class Appli {
 		VueBulletin vueBulletin  = new VueBulletin();
 		
 		
-		//vueLigneBulletin.listerLigneBulletinDiscipline();
+		//vueLigneBulletin.listerLigneBulletin();
 		//vueLigneBulletin.modifierLigneBulletin();
 		
-		vueBulletin.creerBulletin();
+		vueBulletin.listerBulletin();
 		
 		//vueLigneBulletin.modifierClasse();
-		//vueEleve.modifierEleve();
+		//vueEleve.listerEleve();
 		
 		
 		//vueClasse.creerClasse();
-		//vueClasse.supprimerClasse();
-		//vueDiscipline.supprimerDiscipline();
+		//vueClasse.listerClasse();
+		//vueDiscipline.listerDiscipline();
 		
 		
 		

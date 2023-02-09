@@ -7,23 +7,25 @@ import domaine.Eleve;
 import service.EleveImpl;
 
 import service.IEleve;
+import sevice.generique.EleveG;
+import sevice.generique.IMetier;
 
 public class VueEleve {
 
-public IEleve impl = new EleveImpl();
+public IMetier<Eleve, Integer> impl = new EleveG();
 	
 	
 	public  VueEleve() {
 		Eleve eleve1 = new Eleve("345ISM65", "Rachid", "mimir", LocalDate.parse("2020-04-23"), "Thies");
 		Eleve eleve2 = new Eleve("629ISM45", "Bard", "Rami", LocalDate.parse("2010-06-15"), "Thies");
-		impl.creerEleve(eleve1);
-		impl.creerEleve(eleve2);
+		impl.creer(eleve1);
+		impl.creer(eleve2);
 	}
 	
 	public void listerEleve() {
 		System.out.println("Liste des eleves");
 		System.out.println("===================================");
-		for(Eleve eleve : impl.listEleve()) {
+		for(Eleve eleve : impl.liste()) {
 			System.out.println("id : " + eleve.getId());
 			System.out.println("Matricule de l'eleve : " + eleve.getMatricule());
 			System.out.println("Nom de l'eleve : " + eleve.getNom());
@@ -60,7 +62,7 @@ public IEleve impl = new EleveImpl();
 		input = scanner.nextLine();
 		eleve.setLieuNaissance(input);
 		
-		impl.creerEleve(eleve);
+		impl.creer(eleve);
 		listerEleve();
 		
 		
@@ -72,10 +74,10 @@ public IEleve impl = new EleveImpl();
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		eleve= impl.getEleveById(Integer.parseInt(input));
+		eleve= impl.getById(Integer.parseInt(input));
 		
 		
-		if(impl.listEleve().contains(eleve)) {
+		if(impl.liste().contains(eleve)) {
 			System.out.println("id : " + eleve.getId());
 			System.out.println("Matricule de l'eleve : " + eleve.getMatricule());
 			System.out.println("Nom de l'eleve : " + eleve.getNom());
@@ -95,8 +97,8 @@ public IEleve impl = new EleveImpl();
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		eleve= impl.getEleveById(Integer.parseInt(input));
-		impl.supprimerEleve(eleve);
+		eleve= impl.getById(Integer.parseInt(input));
+		impl.supprimer(eleve);
 		
 		listerEleve();
 	}
@@ -107,7 +109,7 @@ public IEleve impl = new EleveImpl();
 		String input;
 		System.out.print("Entrer id : ");
 		input = scanner.nextLine();
-		eleve = impl.getEleveById(Integer.parseInt(input));
+		eleve = impl.getById(Integer.parseInt(input));
 		
 		System.out.print("Matricule : ");
 		input = scanner.nextLine();
@@ -129,7 +131,7 @@ public IEleve impl = new EleveImpl();
 		input = scanner.nextLine();
 		eleve.setLieuNaissance(input);
 		
-		impl.modifierEleve(eleve);
+		impl.modifier(eleve);
 		listerEleve();
 		
 	}

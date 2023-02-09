@@ -8,22 +8,24 @@ import service.ClasseImpl;
 import service.DisciplineImpl;
 import service.IClasse;
 import service.IDiscipline;
+import sevice.generique.DisciplineG;
+import sevice.generique.IMetier;
 
 public class VueDiscipline {
-	public IDiscipline impl = new DisciplineImpl();
+	public IMetier<Discipline, Integer> impl = new DisciplineG();
 	
 	
 	public  VueDiscipline() {
 		Discipline discipline1  = new Discipline("maths", 12, 7, 4);
 		Discipline discipline2 = new Discipline("SVT", 14, 12, 2);
-		impl.creerDiscipline(discipline1);
-		impl.creerDiscipline(discipline2);
+		impl.creer(discipline1);
+		impl.creer(discipline2);
 	}
 	
 	public void listerDiscipline() {
 		System.out.println("Liste des discipline");
 		System.out.println("===================================");
-		for(Discipline discipline : impl.listDiscipline()) {
+		for(Discipline discipline : impl.liste()) {
 			System.out.println("id : " + discipline.getId());
 			System.out.println("Nom de la discipline : " + discipline.getNomDiscipline());
 			System.out.println("Devoir : " + discipline.getDevoir());
@@ -54,7 +56,7 @@ public class VueDiscipline {
 		input = scanner.nextLine();
 		discipline.setCoef(Integer.parseInt(input));
 		
-		impl.creerDiscipline(discipline);
+		impl.creer(discipline);
 		listerDiscipline();
 		
 		
@@ -66,10 +68,10 @@ public class VueDiscipline {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		discipline= impl.getDisciplineById(Integer.parseInt(input));
+		discipline= impl.getById(Integer.parseInt(input));
 		
 		
-		if(impl.listDiscipline().contains(discipline)) {
+		if(impl.liste().contains(discipline)) {
 			System.out.println("id : " + discipline.getId());
 			System.out.println("Nom de la discipline : " + discipline.getNomDiscipline());
 			System.out.println("Devoir : " + discipline.getDevoir());
@@ -88,8 +90,8 @@ public class VueDiscipline {
 		String input;
 		System.out.print("Id : ");
 		input = scanner.nextLine();
-		discipline= impl.getDisciplineById(Integer.parseInt(input));
-		impl.supprimerDiscipline(discipline);
+		discipline= impl.getById(Integer.parseInt(input));
+		impl.supprimer(discipline);
 		
 		listerDiscipline();
 	}
@@ -100,7 +102,7 @@ public class VueDiscipline {
 		String input;
 		System.out.print("Entrer l'id : ");
 		input = scanner.nextLine();
-		discipline = impl.getDisciplineById(Integer.parseInt(input));
+		discipline = impl.getById(Integer.parseInt(input));
 		
 		System.out.print("Nom de la discipline : ");
 		input = scanner.nextLine();
@@ -118,7 +120,7 @@ public class VueDiscipline {
 		input = scanner.nextLine();
 		discipline.setCoef(Integer.parseInt(input));
 		
-		impl.modifierDiscipline(discipline);
+		impl.modifier(discipline);
 		listerDiscipline();
 		
 	}
